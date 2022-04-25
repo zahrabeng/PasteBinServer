@@ -28,11 +28,11 @@ client.connect();
 
 // get all pastes
 app.get("/pastes", async (req, res) => {
-  const result = await client.query('SELECT * FROM pastes');
+  const result = await client.query('SELECT * FROM pastes LIMIT 10');
   res.json(result.rows);
 });
 
-
+//post new paste
 app.post("/pastes", async (req,res) =>{
   const {language, code} = req.body;
   const text = 'INSERT INTO pastes (language, code) VALUES ($1, $2) RETURNING * ';
@@ -47,6 +47,7 @@ app.post("/pastes", async (req,res) =>{
   });
 });
 
+//edit existing paste
 app.put("/pastes/:id", async (req,res) =>{
   const id = parseInt(req.params.id)
   const {language, code} = req.body;
@@ -71,6 +72,27 @@ app.put("/pastes/:id", async (req,res) =>{
     })
   }
 });
+
+//delete existing paste
+app.delete("/pastes/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const text = "DELETE FROM pastes WHERE id = $1";
+  const value = [`${id}`];
+  const result = await client.query(text, value);
+
+  if (result.rowCount === 1) {
+    res.status(200).json({
+      status: "success",
+    });
+  } else {
+    res.status(404).json({
+      status: "fail",
+      data: {
+        id: "Could not find a paste with that id",
+      },
+    });
+  }
+})
 
 
 
