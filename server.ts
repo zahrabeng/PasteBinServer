@@ -32,6 +32,9 @@ app.get("/pastes", async (req, res) => {
   res.json(result.rows);
 });
 
+//get paste with id
+
+
 //post new paste
 app.post("/pastes", async (req,res) =>{
   const {language, code} = req.body;
@@ -93,8 +96,6 @@ app.delete("/pastes/:id", async (req, res) => {
     });
   }
 })
-
-
 
 //Start the server on the given port
 const port = process.env.PORT;
