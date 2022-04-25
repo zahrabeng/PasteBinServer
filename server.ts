@@ -47,6 +47,33 @@ app.post("/pastes", async (req,res) =>{
   });
 });
 
+app.put("/pastes/:id", async (req,res) =>{
+  const id = parseInt(req.params.id)
+  const {language, code} = req.body;
+  const text = 'UPDATE pastes SET language = $1, SET code = $2 WHERE id = $3 RETURNING *';
+  const value = [`${language}`, `${code}`, `${id}`];
+  const result = await client.query(text, value);
+
+  if (result.rowCount === 1){
+    const editedPaste = result.rows[0]
+    res.status(200).json({
+      status: "success",
+      data: {
+        paste: editedPaste
+      }
+    })
+  }
+  else {
+    res.status(404).json({
+      status: "fail",
+      data: {
+        paste: "Cannot find paste"
+      }
+    })
+  }
+});
+
+
 
 //Start the server on the given port
 const port = process.env.PORT;
