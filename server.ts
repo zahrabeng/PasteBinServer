@@ -33,6 +33,15 @@ app.get("/pastes", async (req, res) => {
 });
 
 
+app.post("/pastes", async (req,res) =>{
+  const {language, code} = req.body
+  const text = 'INSERT INTO pastes (language, code) VALUES ($1, $2) RETURNING * '
+  const value = [`${language}`, `${code}`]
+  const result = await client.query(text, value)
+  res.status(201).json(result.rows)
+})
+
+
 //Start the server on the given port
 const port = process.env.PORT;
 if (!port) {
