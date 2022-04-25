@@ -50,7 +50,7 @@ app.post("/pastes", async (req,res) =>{
 app.put("/pastes/:id", async (req,res) =>{
   const id = parseInt(req.params.id)
   const {language, code} = req.body;
-  const text = 'UPDATE pastes SET language = $1, SET code = $2 WHERE id = $3 RETURNING *';
+  const text = 'UPDATE pastes SET language = $1, code = $2 WHERE id = $3 RETURNING *';
   const value = [`${language}`, `${code}`, `${id}`];
   const result = await client.query(text, value);
 
@@ -60,15 +60,14 @@ app.put("/pastes/:id", async (req,res) =>{
       status: "success",
       data: {
         paste: editedPaste
-      }
-    })
-  }
-  else {
+      },
+    });
+  } else {
     res.status(404).json({
       status: "fail",
       data: {
-        paste: "Cannot find paste"
-      }
+        id: "Cannot find paste"
+      },
     })
   }
 });
