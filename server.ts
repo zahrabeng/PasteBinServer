@@ -33,6 +33,13 @@ app.get("/pastes", async (req, res) => {
 });
 
 //get paste with id
+app.get("/pastes/:id", async(req,res) => {
+  const id = parseInt(req.params.id)
+  const text = ('SELECT * FROM pastes WHERE id = $1')
+  const value = [`${id}`] 
+  const result = await client.query(text, value) 
+  res.json(result.rows)
+})
 
 
 //post new paste
