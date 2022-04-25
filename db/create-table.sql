@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS pastes;
+CREATE TABLE pastes (
+	id SERIAL PRIMARY KEY,
+  	language TEXT,
+  	code TEXT NOT NULL
+);
