@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node dist/server.js",
+    "startlocal:dev": "LOCAL=TRUE ts-node server.ts",
     "start:dev": "ts-node server.ts",
     "postinstall": "tsc"
   },
