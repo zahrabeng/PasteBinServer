@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc",
-    "start:dev": "LOCAL=true ts-node server.ts",
+    "start": "node dist/server.js",
+    "start:dev": "ts-node server.ts",
     "postinstall": "tsc"
   },
   "author": "your name here",
