@@ -44,9 +44,9 @@ app.get("/pastes/:id", async(req,res) => {
 
 //post new paste
 app.post("/pastes", async (req,res) =>{
-  const {language, code} = req.body;
-  const text = 'INSERT INTO pastes (language, code) VALUES ($1, $2) RETURNING * ';
-  const value = [`${language}`, `${code}`];
+  const {language, code , title} = req.body;
+  const text = 'INSERT INTO pastes (language, code, title) VALUES ($1, $2 , $3) RETURNING * ';
+  const value = [`${language}`, `${code}`, `${title}`];
   const result = await client.query(text, value);
   const createdPaste = result.rows[0]
   res.status(201).json({
@@ -60,9 +60,9 @@ app.post("/pastes", async (req,res) =>{
 //edit existing paste
 app.put("/pastes/:id", async (req,res) =>{
   const id = parseInt(req.params.id)
-  const {language, code} = req.body;
-  const text = 'UPDATE pastes SET language = $1, code = $2 WHERE id = $3 RETURNING *';
-  const value = [`${language}`, `${code}`, `${id}`];
+  const {language, code, title} = req.body;
+  const text = 'UPDATE pastes SET language = $1, code = $2 , title = $4 WHERE id = $3 RETURNING *';
+  const value = [`${language}`, `${code}`, `${id}` , `${title}`];
   const result = await client.query(text, value);
 
   if (result.rowCount === 1){
