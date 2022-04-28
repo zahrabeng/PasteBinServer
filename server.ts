@@ -104,7 +104,22 @@ app.delete("/pastes/:id", async (req, res) => {
   }
 })
 
+// get all comments
+app.get('pastes/:id/comments', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const text = "SELECT comments FROM pastes WHERE id = $1"
+  const value = [`${id}`]
+  const result = await client.query(text, value);
+  res.json(result.rows);
+});
+
+// add a new comment 
+
+// delete an existing comment
+
 //Start the server on the given port
+
+
 const port = process.env.PORT;
 if (!port) {
   throw 'Missing PORT environment variable.  Set it in .env file.';
