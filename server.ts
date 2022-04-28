@@ -115,6 +115,22 @@ app.get('pastes/:id/comments', async (req, res) => {
 
 // add a new comment 
 
+app.post("/pastes/:id/comments", async (req,res) =>{
+  const id = parseInt(req.params.id)
+  const comments = req.body;
+  const text = 'UPDATE pastes SET comments = $2 where id = $1  RETURNING * ';
+  const value = [`${id}`, `${comments}`];
+  const result = await client.query(text, value);
+  const createdComment = result.rows[0]
+  res.status(201).json({
+    status:"sucess",
+    data: {
+      paste: createdComment,
+    }
+  });
+});
+
+
 // delete an existing comment
 
 //Start the server on the given port
