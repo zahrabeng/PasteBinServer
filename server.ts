@@ -110,7 +110,7 @@ app.get('pastes/:id/comments', async (req, res) => {
   const text = "SELECT comment FROM comments JOIN pastes ON (id = pasteid) WHERE pasteid = $1"
   const value = [`${id}`]
   const result = await client.query(text, value);
-  res.json(result.rows);
+  res.json(result.rows[0]);
 });
 
 // add a new comment 
