@@ -132,6 +132,26 @@ app.post("/pastes/:id", async (req,res) =>{
 
 
 // delete an existing comment
+app.delete("pastes/:pasteId/comments/:commentId", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const commentid = parseInt(req.params.commentId)
+  const text = "DELETE FROM comments WHERE pasteid = $1 AND commentid = $2";
+  const value = [`${id}`, `${commentid}`];
+  const result = await client.query(text, value);
+
+  if (result.rowCount === 1) {
+    res.status(200).json({
+      status: "success",
+    });
+  } else {
+    res.status(404).json({
+      status: "fail",
+      data: {
+        id: "Could not find a paste with that id",
+      },
+    });
+  }
+})
 
 //Start the server on the given port
 
