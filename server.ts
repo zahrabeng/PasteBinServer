@@ -105,13 +105,24 @@ app.delete("/pastes/:id", async (req, res) => {
 })
 
 // get all comments
-app.get('pastes/:id/comments', async (req, res) => {
+app.get('/pastes/:id/comments', async (req, res) => {
   const id = parseInt(req.params.id);
   const text = 'SELECT comment FROM comments JOIN pastes ON (id = pasteid) WHERE pasteid = $1'
   const value = [`${id}`]
   const result = await client.query(text, value);
   res.json(result.rows[0]);
 });
+
+app.get("/pastes/:id", async(req,res) => {
+  const id = parseInt(req.params.id)
+  const text = ('SELECT * FROM pastes WHERE id = $1')
+  const value = [`${id}`] 
+  const result = await client.query(text, value) 
+  res.json(result.rows)
+})
+
+
+
 
 // add a new comment 
 
