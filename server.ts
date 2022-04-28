@@ -115,10 +115,10 @@ app.get('pastes/:id/comments', async (req, res) => {
 
 // add a new comment 
 
-app.post("/pastes/:id/comments", async (req,res) =>{
+app.post("/pastes/:id", async (req,res) =>{
   const id = parseInt(req.params.id)
   const comments = req.body;
-  const text = 'UPDATE pastes SET comments = $2 where id = $1  RETURNING * ';
+  const text = 'INSERT INTO comments (pasteid, comment) VALUES ((SELECT id FROM pastes WHERE id = $1), $2) RETURNING *';
   const value = [`${id}`, `${comments}`];
   const result = await client.query(text, value);
   const createdComment = result.rows[0]
