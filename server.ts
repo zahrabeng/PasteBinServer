@@ -143,9 +143,9 @@ app.post("/pastes/:id", async (req,res) =>{
 
 
 // delete an existing comment
-app.delete("pastes/:pasteId/comments/:commentId", async (req, res) => {
+app.delete("pastes/:id/comments/:commentid", async (req, res) => {
   const id = parseInt(req.params.id);
-  const commentid = parseInt(req.params.commentId)
+  const commentid = parseInt(req.params.commentid)
   const text = "DELETE FROM comments WHERE pasteid = $1 AND commentid = $2";
   const value = [`${id}`, `${commentid}`];
   const result = await client.query(text, value);
