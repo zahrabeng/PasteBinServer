@@ -107,7 +107,7 @@ app.delete("/pastes/:id", async (req, res) => {
 // get all comments
 app.get('pastes/:id/comments', async (req, res) => {
   const id = parseInt(req.params.id);
-  const text = "SELECT comment FROM pastes WHERE id = $1"
+  const text = "SELECT comments FROM pastes WHERE id = $1"
   const value = [`${id}`]
   const result = await client.query(text, value);
   res.json(result.rows);
