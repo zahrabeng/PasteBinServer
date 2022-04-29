@@ -28,7 +28,7 @@ client.connect();
 
 // get all pastes
 app.get("/pastes", async (req, res) => {
-  const result = await client.query('SELECT * FROM pastes');
+  const result = await client.query('SELECT * FROM pastes ORDER BY time DESC LIMIT 10');
   res.json(result.rows);
 });
 
