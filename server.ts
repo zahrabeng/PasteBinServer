@@ -64,7 +64,6 @@ app.put("/pastes/:id", async (req,res) =>{
   const text = 'UPDATE pastes SET language = $1, code = $2 , title = $4 WHERE id = $3 RETURNING *';
   const value = [`${language}`, `${code}`, `${id}` , `${title}`];
   const result = await client.query(text, value);
-
   if (result.rowCount === 1){
     const editedPaste = result.rows[0]
     res.status(200).json({
@@ -145,7 +144,7 @@ app.delete("/pastes/:id/comments/:commentid", async (req, res) => {
   if (result.rowCount === 1) {
     res.status(200).json({
       status: "success",
-    });
+    }); 
   } else {
     res.status(404).json({
       status: "fail",
